@@ -1,16 +1,13 @@
 version: '3.8'
 services:
   homeserver:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - pqchat_data:/var/lib/pqchat
+    image: mnylif/pqchat:latest
+    container_name: pqchat
+    restart: unless-stopped
     ports:
       - "6167:6167"
+    volumes:
+      - ./data:/var/lib/pqchat
+      - ./pqchat.toml:/var/lib/pqchat/pqchat.toml:ro
     environment:
       - RUST_LOG=info
-    restart: unless-stopped
-
-volumes:
-  pqchat_data:
