@@ -1,6 +1,6 @@
 FROM rust:slim as builder
 
-WORKDIR /usr/src/conduwuit
+WORKDIR /usr/src/pqchat
 
 # Install build dependencies
 RUN apt-get update && \
@@ -49,21 +49,21 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user
-RUN useradd -m -U -s /bin/false conduwuit
+RUN useradd -m -U -s /bin/false pqchat
 
 # Create necessary directories
-RUN mkdir -p /var/lib/conduwuit && \
-    chown -R conduwuit:conduwuit /var/lib/conduwuit
+RUN mkdir -p /var/lib/pqchat && \
+    chown -R pqchat:pqchat /var/lib/pqchat
 
 # Copy the binary
-COPY --from=builder /usr/src/conduwuit/target/release/conduwuit /usr/local/bin/
+COPY --from=builder /usr/src/pqchat/target/release/pqchat /usr/local/bin/
 
 # Set up volumes and expose port
-VOLUME ["/var/lib/conduwuit"]
+VOLUME ["/var/lib/pqchat"]
 EXPOSE 6167
 
 # Switch to non-root user
-USER conduwuit
+USER pqchat
 
 # Run the server
-CMD ["conduwuit"]
+CMD ["pqchat"]

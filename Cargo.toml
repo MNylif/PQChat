@@ -1,30 +1,26 @@
-#cargo-features = ["profile-rustflags"]
-
 [workspace]
 resolver = "2"
-members = ["src/crypto"]
-default-members = ["src/crypto"]
+members = [
+    "src/admin",
+    "src/crypto",
+]
+default-members = ["src/admin", "src/crypto"]
 
 [workspace.package]
-authors = [
-    "June Clementine Strawberry <june@girlboss.ceo>",
-    "strawberry <strawberry@puppygock.gay>", # woof
-    "Jason Volk <jason@zemos.net>",
-]
-categories = ["network-programming"]
-description = "a very cool Matrix chat homeserver written in Rust"
+name = "pqchat"
+version = "0.1.0"
 edition = "2021"
-homepage = "https://conduwuit.puppyirl.gay/"
-keywords = ["chat", "matrix", "networking", "server", "uwu"]
-license = "Apache-2.0"
-# See also `rust-toolchain.toml`
+description = "A secure, post-quantum encrypted Matrix homeserver implementation in Rust"
 readme = "README.md"
-repository = "https://github.com/girlbossceo/conduwuit"
+license = "AGPL-3.0"
+repository = "https://github.com/MNylif/PQChat"
+authors = ["MNylif"]
+categories = ["network-programming"]
+keywords = ["chat", "matrix", "networking", "server", "uwu"]
 rust-version = "1.84.0"
-version = "0.5.0"
 
 [workspace.metadata.crane]
-name = "conduwuit"
+name = "pqchat"
 
 [workspace.dependencies.arrayvec]
 version = "0.7.4"

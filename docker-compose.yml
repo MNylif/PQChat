@@ -4,16 +4,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: unless-stopped
+    volumes:
+      - pqchat_data:/var/lib/pqchat
     ports:
       - "6167:6167"
-    volumes:
-      - ./data:/var/lib/conduwuit
     environment:
-      - CONDUWUIT_SERVER_NAME=localhost
-      - CONDUWUIT_DATABASE_PATH=/var/lib/conduwuit/conduwuit.db
-      - CONDUWUIT_PORT=6167
-      - CONDUWUIT_ALLOW_ENCRYPTION=true
+      - RUST_LOG=info
+    restart: unless-stopped
 
 volumes:
-  db:
+  pqchat_data:
