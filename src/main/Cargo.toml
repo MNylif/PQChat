@@ -1,0 +1,193 @@
+[package]
+name = "conduwuit"
+default-run = "conduwuit"
+authors.workspace = true
+categories.workspace = true
+description.workspace = true
+edition.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+version.workspace = true
+metadata.crane.workspace = true
+
+[package.metadata.deb]
+name = "conduwuit"
+maintainer = "strawberry <strawberry@puppygock.gay>"
+copyright = "2024, strawberry <strawberry@puppygock.gay>"
+license-file = ["../../LICENSE", "3"]
+depends = "$auto, ca-certificates"
+extended-description = """\
+a cool hard fork of Conduit, a Matrix homeserver written in Rust"""
+section = "net"
+priority = "optional"
+conf-files = ["/etc/conduwuit/conduwuit.toml"]
+maintainer-scripts = "../../debian/"
+systemd-units = { unit-name = "conduwuit", start = false }
+assets = [
+	["../../debian/README.md", "usr/share/doc/conduwuit/README.Debian", "644"],
+	["../../README.md", "usr/share/doc/conduwuit/", "644"],
+	["../../target/release/conduwuit", "usr/sbin/conduwuit", "755"],
+	["../../conduwuit-example.toml", "etc/conduwuit/conduwuit.toml", "640"],
+]
+
+[features]
+default = [
+	"brotli_compression",
+	"element_hacks",
+	"gzip_compression",
+	"io_uring",
+	"jemalloc",
+	"jemalloc_conf",
+	"media_thumbnail",
+	"release_max_log_level",
+	"systemd",
+	"url_preview",
+	"zstd_compression",
+]
+
+blurhashing = [
+	"conduwuit-service/blurhashing",
+]
+brotli_compression = [
+	"conduwuit-api/brotli_compression",
+	"conduwuit-core/brotli_compression",
+	"conduwuit-router/brotli_compression",
+	"conduwuit-service/brotli_compression",
+]
+console = [
+	"conduwuit-service/console",
+]
+direct_tls = [
+    "conduwuit-router/direct_tls"
+]
+element_hacks = [
+	"conduwuit-api/element_hacks",
+	"conduwuit-service/element_hacks",
+]
+gzip_compression = [
+	"conduwuit-api/gzip_compression",
+	"conduwuit-router/gzip_compression",
+	"conduwuit-service/gzip_compression",
+]
+hardened_malloc = [
+	"conduwuit-core/hardened_malloc",
+]
+io_uring = [
+	"conduwuit-database/io_uring",
+]
+jemalloc = [
+	"conduwuit-core/jemalloc",
+	"conduwuit-database/jemalloc",
+]
+jemalloc_prof = [
+	"conduwuit-core/jemalloc_prof",
+]
+jemalloc_stats = [
+	"conduwuit-core/jemalloc_stats",
+]
+jemalloc_conf = [
+	"conduwuit-core/jemalloc_conf",
+]
+media_thumbnail = [
+	"conduwuit-service/media_thumbnail",
+]
+perf_measurements = [
+	"dep:opentelemetry",
+	"dep:tracing-flame",
+	"dep:tracing-opentelemetry",
+	"dep:opentelemetry_sdk",
+	"dep:opentelemetry-jaeger",
+	"conduwuit-core/perf_measurements",
+	"conduwuit-core/sentry_telemetry",
+]
+# increases performance, reduces build times, and reduces binary size by not compiling or
+# genreating code for log level filters that users will generally not use (debug and trace)
+release_max_log_level = [
+	"tracing/max_level_trace",
+	"tracing/release_max_level_info",
+	"log/max_level_trace",
+	"log/release_max_level_info",
+	"conduwuit-admin/release_max_log_level",
+	"conduwuit-api/release_max_log_level",
+	"conduwuit-core/release_max_log_level",
+	"conduwuit-database/release_max_log_level",
+	"conduwuit-router/release_max_log_level",
+	"conduwuit-service/release_max_log_level",
+]
+sentry_telemetry = [
+	"dep:sentry",
+	"dep:sentry-tracing",
+	"dep:sentry-tower",
+	"conduwuit-core/sentry_telemetry",
+	"conduwuit-router/sentry_telemetry",
+]
+systemd = [
+	"conduwuit-router/systemd",
+]
+# enable the tokio_console server ncompatible with release_max_log_level
+tokio_console = [
+	"dep:console-subscriber",
+	"tokio/tracing",
+]
+url_preview = [
+	"conduwuit-service/url_preview",
+]
+zstd_compression = [
+    "conduwuit-api/zstd_compression",
+	"conduwuit-core/zstd_compression",
+	"conduwuit-database/zstd_compression",
+	"conduwuit-router/zstd_compression",
+]
+conduwuit_mods = [
+    "conduwuit-core/conduwuit_mods",
+]
+
+[dependencies]
+conduwuit-admin.workspace = true
+conduwuit-api.workspace = true
+conduwuit-core.workspace = true
+conduwuit-database.workspace = true
+conduwuit-router.workspace = true
+conduwuit-service.workspace = true
+
+clap.workspace = true
+console-subscriber.optional = true
+console-subscriber.workspace = true
+const-str.workspace = true
+log.workspace = true
+opentelemetry-jaeger.optional = true
+opentelemetry-jaeger.workspace = true
+opentelemetry.optional = true
+opentelemetry.workspace = true
+opentelemetry_sdk.optional = true
+opentelemetry_sdk.workspace = true
+sentry-tower.optional = true
+sentry-tower.workspace = true
+sentry-tracing.optional = true
+sentry-tracing.workspace = true
+sentry.optional = true
+sentry.workspace = true
+tokio-metrics.optional = true
+tokio-metrics.workspace = true
+tokio.workspace = true
+tracing-flame.optional = true
+tracing-flame.workspace = true
+tracing-opentelemetry.optional = true
+tracing-opentelemetry.workspace = true
+tracing-subscriber.workspace = true
+tracing.workspace = true
+
+[target.'cfg(all(not(target_env = "msvc"), target_os = "linux"))'.dependencies]
+hardened_malloc-rs.workspace = true
+hardened_malloc-rs.optional = true
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "conduwuit"
+path = "main.rs"

@@ -1,0 +1,46 @@
+use std::collections::BTreeMap;
+
+use axum::extract::State;
+use conduwuit::{Result, Server};
+use ruma::{
+	api::client::discovery::get_capabilities::{
+		self, Capabilities, GetLoginTokenCapability, RoomVersionStability,
+		RoomVersionsCapability, ThirdPartyIdChangesCapability,
+	},
+	RoomVersionId,
+};
+use serde_json::json;
+
+use crate::Ruma;
+
+/// # `GET /_matrix/client/v3/capabilities`
+///
+/// Get information on the supported feature set and other relevent capabilities
+/// of this server.
+pub(crate) async fn get_capabilities_route(
+	State(services): State<crate::State>,
+	_body: Ruma<get_capabilities::v3::Request>,
+) -> Result<get_capabilities::v3::Response> {
+	let available: BTreeMap<RoomVersionId, RoomVersionStability> =
+		Server::available_room_versions().collect();
+
+	let mut capabilities = Capabilities::default();
+	capabilities.room_versions = RoomVersionsCapability {
+		default: services.server.config.default_room_version.clone(),
+		available,
+	};
+
+	// we do not implement 3PID stuff
+	capabilities.thirdparty_id_changes = ThirdPartyIdChangesCapability { enabled: false };
+
+	capabilities.get_login_token = GetLoginTokenCapability {
+		enabled: services.server.config.login_via_existing_session,
+	};
+
+	// MSC4133 capability
+	capabilities
+		.set("uk.tcpip.msc4133.profile_fields", json!({"enabled": true}))
+		.expect("this is valid JSON we created");
+
+	Ok(get_capabilities::v3::Response { capabilities })
+}

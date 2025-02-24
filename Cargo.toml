@@ -1,0 +1,982 @@
+#cargo-features = ["profile-rustflags"]
+
+[workspace]
+resolver = "2"
+members = ["src/crypto"]
+default-members = ["src/crypto"]
+
+[workspace.package]
+authors = [
+    "June Clementine Strawberry <june@girlboss.ceo>",
+    "strawberry <strawberry@puppygock.gay>", # woof
+    "Jason Volk <jason@zemos.net>",
+]
+categories = ["network-programming"]
+description = "a very cool Matrix chat homeserver written in Rust"
+edition = "2021"
+homepage = "https://conduwuit.puppyirl.gay/"
+keywords = ["chat", "matrix", "networking", "server", "uwu"]
+license = "Apache-2.0"
+# See also `rust-toolchain.toml`
+readme = "README.md"
+repository = "https://github.com/girlbossceo/conduwuit"
+rust-version = "1.84.0"
+version = "0.5.0"
+
+[workspace.metadata.crane]
+name = "conduwuit"
+
+[workspace.dependencies.arrayvec]
+version = "0.7.4"
+features = ["serde"]
+
+[workspace.dependencies.smallvec]
+version = "1.13.2"
+features = [
+	"const_generics",
+	"const_new",
+	"serde",
+	"union",
+	"write",
+]
+
+[workspace.dependencies.const-str]
+version = "0.5.7"
+
+[workspace.dependencies.ctor]
+version = "0.2.9"
+
+[workspace.dependencies.cargo_toml]
+version = "0.21"
+default-features = false
+features = ["features"]
+
+[workspace.dependencies.toml]
+version = "0.8.14"
+default-features = false
+features = ["parse"]
+
+[workspace.dependencies.sanitize-filename]
+version = "0.6.0"
+
+[workspace.dependencies.base64]
+version = "0.22.1"
+default-features = false
+
+# used for TURN server authentication
+[workspace.dependencies.hmac]
+version = "0.12.1"
+default-features = false
+
+# used for checking if an IP is in specific subnets / CIDR ranges easier
+[workspace.dependencies.ipaddress]
+version = "0.1.3"
+
+[workspace.dependencies.rand]
+version = "0.8.5"
+
+# Used for the http request / response body type for Ruma endpoints used with reqwest
+[workspace.dependencies.bytes]
+version = "1.9.0"
+
+[workspace.dependencies.http-body-util]
+version = "0.1.2"
+
+[workspace.dependencies.http]
+version = "1.2.0"
+
+[workspace.dependencies.regex]
+version = "1.11.1"
+
+[workspace.dependencies.axum]
+version = "0.7.9"
+default-features = false
+features = [
+	"form",
+	"http1",
+	"http2",
+	"json",
+	"matched-path",
+	"tokio",
+	"tracing",
+]
+
+[workspace.dependencies.axum-extra]
+version = "0.9.6"
+default-features = false
+features = ["typed-header", "tracing"]
+
+[workspace.dependencies.axum-server]
+version = "0.7.1"
+default-features = false
+
+# to listen on both HTTP and HTTPS if listening on TLS dierctly from conduwuit for complement or sytest
+[workspace.dependencies.axum-server-dual-protocol]
+version = "0.7"
+
+[workspace.dependencies.axum-client-ip]
+version = "0.6.1"
+
+[workspace.dependencies.tower]
+version = "0.5.1"
+default-features = false
+features = ["util"]
+
+[workspace.dependencies.tower-http]
+version = "0.6.2"
+default-features = false
+features = [
+    "add-extension",
+    "catch-panic",
+    "cors",
+    "sensitive-headers",
+    "set-header",
+    "timeout",
+    "trace",
+    "util",
+]
+
+[workspace.dependencies.rustls]
+version = "0.23.19"
+default-features = false
+features = ["aws_lc_rs"]
+
+[workspace.dependencies.reqwest]
+version = "0.12.9"
+default-features = false
+features = [
+	"rustls-tls-native-roots",
+	"socks",
+	"hickory-dns",
+	"http2",
+]
+
+[workspace.dependencies.serde]
+version = "1.0.216"
+default-features = false
+features = ["rc"]
+
+[workspace.dependencies.serde_json]
+version = "1.0.133"
+default-features = false
+features = ["raw_value"]
+
+# Used for appservice registration files
+[workspace.dependencies.serde_yaml]
+version = "0.9.34"
+
+# Used to load forbidden room/user regex from config
+[workspace.dependencies.serde_regex]
+version = "1.1.0"
+
+# Used for ruma wrapper
+[workspace.dependencies.serde_html_form]
+version = "0.2.6"
+
+# Used for password hashing
+[workspace.dependencies.argon2]
+version = "0.5.3"
+features = ["alloc", "rand"]
+default-features = false
+
+# Used to generate thumbnails for images & blurhashes
+[workspace.dependencies.image]
+version = "0.25.5"
+default-features = false
+features = [
+	"jpeg",
+	"png",
+	"gif",
+	"webp",
+]
+
+[workspace.dependencies.blurhash]
+version = "0.2.3"
+default-features = false
+features = [
+	"fast-linear-to-srgb",
+	"image",
+]
+
+# logging
+[workspace.dependencies.log]
+version = "0.4.22"
+default-features = false
+[workspace.dependencies.tracing]
+version = "0.1.41"
+default-features = false
+[workspace.dependencies.tracing-subscriber]
+version = "=0.3.18"
+default-features = false
+features = ["env-filter", "std", "tracing", "tracing-log", "ansi", "fmt"]
+[workspace.dependencies.tracing-core]
+version = "0.1.33"
+default-features = false
+
+# for URL previews
+[workspace.dependencies.webpage]
+version = "2.0.1"
+default-features = false
+
+# used for conduwuit's CLI and admin room command parsing
+[workspace.dependencies.clap]
+version = "4.5.23"
+default-features = false
+features = [
+	"derive",
+	"env",
+	"error-context",
+	"help",
+	"std",
+	"string",
+	"usage",
+]
+
+[workspace.dependencies.futures]
+version = "0.3.30"
+default-features = false
+features = ["std", "async-await"]
+
+[workspace.dependencies.tokio]
+version = "1.42.0"
+default-features = false
+features = [
+	"fs",
+	"net",
+	"macros",
+	"sync",
+	"signal",
+	"time",
+	"rt-multi-thread",
+	"io-util",
+	"tracing",
+]
+
+[workspace.dependencies.tokio-metrics]
+version = "0.4.0"
+
+[workspace.dependencies.libloading]
+version = "0.8.6"
+
+# Validating urls in config, was already a transitive dependency
+[workspace.dependencies.url]
+version = "2.5.4"
+default-features = false
+features = ["serde"]
+
+# standard date and time tools
+[workspace.dependencies.chrono]
+version = "0.4.38"
+features = ["alloc", "std"]
+default-features = false
+
+[workspace.dependencies.hyper]
+version = "1.5.1"
+default-features = false
+features = [
+	"server",
+	"http1",
+	"http2",
+]
+
+[workspace.dependencies.hyper-util]
+# hyper-util >=0.1.9 seems to have DNS issues
+version = "=0.1.8"
+default-features = false
+features = [
+	"server-auto",
+	"server-graceful",
+	"tokio",
+]
+
+# to support multiple variations of setting a config option
+[workspace.dependencies.either]
+version = "1.13.0"
+default-features = false
+features = ["serde"]
+
+# Used for reading the configuration from conduwuit.toml & environment variables
+[workspace.dependencies.figment]
+version = "0.10.19"
+default-features = false
+features = ["env", "toml"]
+
+[workspace.dependencies.hickory-resolver]
+version = "0.24.2"
+default-features = false
+
+# Used for conduwuit::Error type
+[workspace.dependencies.thiserror]
+version = "2.0.7"
+default-features = false
+
+# Used when hashing the state
+[workspace.dependencies.ring]
+version = "0.17.8"
+default-features = false
+
+# Used to make working with iterators easier, was already a transitive depdendency
+[workspace.dependencies.itertools]
+version = "0.13.0"
+
+# to parse user-friendly time durations in admin commands
+#TODO: overlaps chrono?
+[workspace.dependencies.cyborgtime]
+version = "2.1.1"
+
+# used for MPSC channels
+[workspace.dependencies.loole]
+version = "0.4.0"
+
+# used for MPMC channels
+[workspace.dependencies.async-channel]
+version = "2.3.1"
+
+[workspace.dependencies.async-trait]
+version = "0.1.83"
+
+[workspace.dependencies.lru-cache]
+version = "0.1.2"
+
+# Used for matrix spec type definitions and helpers
+[workspace.dependencies.ruma]
+git = "https://github.com/girlbossceo/ruwuma"
+#branch = "conduwuit-changes"
+rev = "f5667c6292adb43fbe4725d31d6b5127a0cf60ce"
+features = [
+    "compat",
+    "rand",
+    "appservice-api-c",
+    "client-api",
+    "federation-api",
+    "markdown",
+    "push-gateway-api-c",
+    "state-res",
+    "server-util",
+    "unstable-exhaustive-types",
+    "ring-compat",
+    "compat-upload-signatures",
+    "identifiers-validation",
+    "unstable-unspecified",
+    "unstable-msc2448",
+    "unstable-msc2666",
+    "unstable-msc2867",
+    "unstable-msc2870",
+    "unstable-msc3026",
+    "unstable-msc3061",
+    "unstable-msc3245",
+    "unstable-msc3266",
+    "unstable-msc3381", # polls
+    "unstable-msc3489", # beacon / live location
+    "unstable-msc3575",
+    "unstable-msc4075",
+    "unstable-msc4121",
+    "unstable-msc4125",
+    "unstable-msc4186",
+    "unstable-msc4203", # sending to-device events to appservices 
+    "unstable-msc4210", # remove legacy mentions
+    "unstable-extensible-events",
+]
+
+[workspace.dependencies.rust-rocksdb]
+path = "deps/rust-rocksdb"
+package = "rust-rocksdb-uwu"
+features = [
+	"multi-threaded-cf",
+	"mt_static",
+	"lz4",
+	"zstd",
+	"zlib",
+	"bzip2",
+]
+
+[workspace.dependencies.sha2]
+version = "0.10.8"
+default-features = false
+
+[workspace.dependencies.sha1]
+version = "0.10.6"
+default-features = false
+
+# optional opentelemetry, performance measurements, flamegraphs, etc for performance measurements and monitoring
+[workspace.dependencies.opentelemetry]
+version = "0.21.0"
+
+[workspace.dependencies.tracing-flame]
+version = "0.2.0"
+
+[workspace.dependencies.tracing-opentelemetry]
+version = "0.22.0"
+
+[workspace.dependencies.opentelemetry_sdk]
+version = "0.21.2"
+features = ["rt-tokio"]
+
+[workspace.dependencies.opentelemetry-jaeger]
+version = "0.20.0"
+features = ["rt-tokio"]
+
+# optional sentry metrics for crash/panic reporting
+[workspace.dependencies.sentry]
+version = "0.35.0"
+default-features = false
+features = [
+    "backtrace",
+    "contexts",
+    "debug-images",
+    "panic",
+    "rustls",
+    "tower",
+    "tower-http",
+    "tracing",
+    "reqwest",
+    "log",
+]
+
+[workspace.dependencies.sentry-tracing]
+version = "0.35.0"
+[workspace.dependencies.sentry-tower]
+version = "0.35.0"
+
+# jemalloc usage
+[workspace.dependencies.tikv-jemalloc-sys]
+git = "https://github.com/girlbossceo/jemallocator"
+rev = "82af58d6a13ddd5dcdc7d4e91eae3b63292995b8"
+default-features = false
+features = [
+	"background_threads_runtime_support",
+	"unprefixed_malloc_on_supported_platforms",
+]
+[workspace.dependencies.tikv-jemallocator]
+git = "https://github.com/girlbossceo/jemallocator"
+rev = "82af58d6a13ddd5dcdc7d4e91eae3b63292995b8"
+default-features = false
+features = [
+	"background_threads_runtime_support",
+	"unprefixed_malloc_on_supported_platforms",
+]
+[workspace.dependencies.tikv-jemalloc-ctl]
+git = "https://github.com/girlbossceo/jemallocator"
+rev = "82af58d6a13ddd5dcdc7d4e91eae3b63292995b8"
+default-features = false
+features = ["use_std"]
+
+[workspace.dependencies.console-subscriber]
+version = "0.4"
+
+[workspace.dependencies.nix]
+version = "0.29.0"
+default-features = false
+features = ["resource"]
+
+[workspace.dependencies.sd-notify]
+version = "0.4.3"
+default-features = false
+
+[workspace.dependencies.hardened_malloc-rs]
+version = "0.1.2"
+default-features = false
+features = [
+	"static",
+	"gcc",
+	"light",
+]
+
+[workspace.dependencies.rustyline-async]
+version = "0.4.3"
+default-features = false
+
+[workspace.dependencies.termimad]
+version = "0.31.1"
+default-features = false
+
+[workspace.dependencies.checked_ops]
+version = "0.1"
+
+[workspace.dependencies.syn]
+version = "2.0.90"
+default-features = false
+features = ["full", "extra-traits"]
+
+[workspace.dependencies.quote]
+version = "1.0.37"
+
+[workspace.dependencies.proc-macro2]
+version = "1.0.89"
+
+[workspace.dependencies.bytesize]
+version = "1.3.0"
+
+[workspace.dependencies.core_affinity]
+version = "0.8.1"
+
+[workspace.dependencies.libc]
+version = "0.2"
+
+[workspace.dependencies.num-traits]
+version = "0.2"
+
+[workspace.dependencies.minicbor]
+version = "0.25.1"
+features = ["std"]
+
+[workspace.dependencies.minicbor-serde]
+version = "0.3.2"
+features = ["std"]
+
+[workspace.dependencies.pqcrypto-kyber]
+version = "0.7.6"
+default-features = false
+
+[workspace.dependencies.pqcrypto-traits]
+version = "0.3.4"
+default-features = false
+
+[workspace.dependencies.pqcrypto-dilithium]
+version = "0.4.6"
+default-features = false
+
+#
+# Patches
+#
+
+# backport of [https://github.com/tokio-rs/tracing/pull/2956] to the 0.1.x branch of tracing.
+# we can switch back to upstream if #2956 is merged and backported in the upstream repo.
+# https://github.com/girlbossceo/tracing/commit/b348dca742af641c47bc390261f60711c2af573c
+[patch.crates-io.tracing-subscriber]
+git = "https://github.com/girlbossceo/tracing"
+rev = "05825066a6d0e9ad6b80dcf29457eb179ff4768c"
+[patch.crates-io.tracing]
+git = "https://github.com/girlbossceo/tracing"
+rev = "05825066a6d0e9ad6b80dcf29457eb179ff4768c"
+[patch.crates-io.tracing-core]
+git = "https://github.com/girlbossceo/tracing"
+rev = "05825066a6d0e9ad6b80dcf29457eb179ff4768c"
+[patch.crates-io.tracing-log]
+git = "https://github.com/girlbossceo/tracing"
+rev = "05825066a6d0e9ad6b80dcf29457eb179ff4768c"
+
+# adds a tab completion callback: https://github.com/girlbossceo/rustyline-async/commit/de26100b0db03e419a3d8e1dd26895d170d1fe50
+# adds event for CTRL+\: https://github.com/girlbossceo/rustyline-async/commit/67d8c49aeac03a5ef4e818f663eaa94dd7bf339b
+[patch.crates-io.rustyline-async]
+git = "https://github.com/girlbossceo/rustyline-async"
+rev = "deaeb0694e2083f53d363b648da06e10fc13900c"
+
+# adds LIFO queue scheduling; this should be updated with PR progress.
+[patch.crates-io.event-listener]
+git = "https://github.com/girlbossceo/event-listener"
+rev = "fe4aebeeaae435af60087ddd56b573a2e0be671d"
+[patch.crates-io.async-channel]
+git = "https://github.com/girlbossceo/async-channel"
+rev = "92e5e74063bf2a3b10414bcc8a0d68b235644280"
+
+[patch.crates-io.core_affinity]
+git = "https://github.com/girlbossceo/core_affinity_rs"
+rev = "9c8e51510c35077df888ee72a36b4b05637147da"
+
+#
+# Our crates
+#
+
+[workspace.dependencies.conduwuit-router]
+package = "conduwuit_router"
+path = "src/router"
+default-features = false
+
+[workspace.dependencies.conduwuit-admin]
+package = "conduwuit_admin"
+path = "src/admin"
+default-features = false
+
+[workspace.dependencies.conduwuit-api]
+package = "conduwuit_api"
+path = "src/api"
+default-features = false
+
+[workspace.dependencies.conduwuit-service]
+package = "conduwuit_service"
+path = "src/service"
+default-features = false
+
+[workspace.dependencies.conduwuit-database]
+package = "conduwuit_database"
+path = "src/database"
+default-features = false
+
+[workspace.dependencies.conduwuit-core]
+package = "conduwuit_core"
+path = "src/core"
+default-features = false
+
+[workspace.dependencies.conduwuit-macros]
+package = "conduwuit_macros"
+path = "src/macros"
+default-features = false
+
+###############################################################################
+#
+# Release profiles
+#
+
+[profile.release]
+strip = "symbols"
+lto = "thin"
+
+# release profile with debug symbols
+[profile.release-debuginfo]
+inherits = "release"
+debug = "full"
+strip = "none"
+
+[profile.release-high-perf]
+inherits = "release"
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+
+# do not use without profile-rustflags enabled
+[profile.release-max-perf]
+inherits = "release"
+strip = "symbols"
+lto = "fat"
+#rustflags = [
+#	'-Ctarget-cpu=native',
+#	'-Ztune-cpu=native',
+#	'-Ctarget-feature=+crt-static',
+#	'-Crelocation-model=static',
+#	'-Ztls-model=local-exec',
+#	'-Zinline-in-all-cgus=true',
+#	'-Zinline-mir=true',
+#	'-Zmir-opt-level=3',
+#	'-Clink-arg=-fuse-ld=gold',
+#	'-Clink-arg=-Wl,--threads',
+#	'-Clink-arg=-Wl,--gc-sections',
+#	'-Clink-arg=-luring',
+#	'-Clink-arg=-lstdc++',
+#	'-Clink-arg=-lc',
+#	'-Ztime-passes',
+#	'-Ztime-llvm-passes',
+#]
+
+[profile.release-max-perf.build-override]
+inherits = "release-max-perf"
+opt-level = 0
+codegen-units = 32
+#rustflags = [
+#	'-Crelocation-model=pic',
+#	'-Ctarget-feature=-crt-static',
+#	'-Clink-arg=-Wl,--no-gc-sections',
+#]
+
+[profile.release-max-perf.package.conduwuit_macros]
+inherits = "release-max-perf.build-override"
+#rustflags = [
+#	'-Crelocation-model=pic',
+#	'-Ctarget-feature=-crt-static',
+#]
+
+[profile.bench]
+inherits = "release"
+#rustflags = [
+#	"-Cremark=all",
+#	'-Ztime-passes',
+#	'-Ztime-llvm-passes',
+#]
+
+###############################################################################
+#
+# Developer profile
+#
+
+# To enable hot-reloading:
+# 1. Uncomment all of the rustflags here.
+# 2. Uncomment crate-type=dylib in src/*/Cargo.toml and deps/rust-rocksdb/Cargo.toml
+#
+# opt-level, mir-opt-level, validate-mir are not known to interfere with reloading
+# and can be raised if build times are tolerable.
+
+[profile.dev]
+debug = "full"
+opt-level = 0
+panic = "unwind"
+debug-assertions = true
+incremental = true
+#rustflags = [
+#	'--cfg', 'conduwuit_mods',
+#	'-Ztime-passes',
+#	'-Zmir-opt-level=0',
+#	'-Zvalidate-mir=false',
+#	'-Ztls-model=global-dynamic',
+#	'-Cprefer-dynamic=true',
+#	'-Zstaticlib-prefer-dynamic=true',
+#	'-Zstaticlib-allow-rdylib-deps=true',
+#	'-Zpacked-bundled-libs=false',
+#	'-Zplt=true',
+#	'-Crpath=true',
+#	'-Clink-arg=-Wl,--as-needed',
+#	'-Clink-arg=-Wl,--allow-shlib-undefined',
+#	'-Clink-arg=-Wl,-z,keep-text-section-prefix',
+#	'-Clink-arg=-Wl,-z,lazy',
+#]
+
+[profile.dev.package.conduwuit_core]
+inherits = "dev"
+incremental = false
+#rustflags = [
+#	'--cfg', 'conduwuit_mods',
+#	'-Ztime-passes',
+#	'-Zmir-opt-level=0',
+#	'-Ztls-model=initial-exec',
+#	'-Cprefer-dynamic=true',
+#	'-Zstaticlib-prefer-dynamic=true',
+#	'-Zstaticlib-allow-rdylib-deps=true',
+#	'-Zpacked-bundled-libs=false',
+#	'-Zplt=true',
+#	'-Clink-arg=-Wl,--as-needed',
+#	'-Clink-arg=-Wl,--allow-shlib-undefined',
+#	'-Clink-arg=-Wl,-z,lazy',
+#	'-Clink-arg=-Wl,-z,unique',
+#	'-Clink-arg=-Wl,-z,nodlopen',
+#	'-Clink-arg=-Wl,-z,nodelete',
+#]
+
+[profile.dev.package.conduwuit]
+inherits = "dev"
+#rustflags = [
+#	'--cfg', 'conduwuit_mods',
+#	'-Ztime-passes',
+#	'-Zmir-opt-level=0',
+#	'-Zvalidate-mir=false',
+#	'-Ztls-model=global-dynamic',
+#	'-Cprefer-dynamic=true',
+#	'-Zexport-executable-symbols=true',
+#	'-Zplt=true',
+#	'-Crpath=true',
+#	'-Clink-arg=-Wl,--as-needed',
+#	'-Clink-arg=-Wl,--allow-shlib-undefined',
+#	'-Clink-arg=-Wl,--export-dynamic',
+#	'-Clink-arg=-Wl,-z,lazy',
+#]
+
+[profile.dev.package.rust-rocksdb-uwu]
+inherits = "dev"
+debug = 'limited'
+incremental = false
+codegen-units = 1
+opt-level = 'z'
+#rustflags = [
+#	'--cfg', 'conduwuit_mods',
+#	'-Ztls-model=initial-exec',
+#	'-Cprefer-dynamic=true',
+#	'-Zstaticlib-prefer-dynamic=true',
+#	'-Zstaticlib-allow-rdylib-deps=true',
+#	'-Zpacked-bundled-libs=true',
+#	'-Zplt=true',
+#	'-Clink-arg=-Wl,--no-as-needed',
+#	'-Clink-arg=-Wl,--allow-shlib-undefined',
+#	'-Clink-arg=-Wl,-z,lazy',
+#	'-Clink-arg=-Wl,-z,nodlopen',
+#	'-Clink-arg=-Wl,-z,nodelete',
+#]
+
+[profile.dev.package.'*']
+inherits = "dev"
+debug = 'limited'
+incremental = false
+codegen-units = 1
+opt-level = 'z'
+#rustflags = [
+#	'--cfg', 'conduwuit_mods',
+#	'-Ztls-model=global-dynamic',
+#	'-Cprefer-dynamic=true',
+#	'-Zstaticlib-prefer-dynamic=true',
+#	'-Zstaticlib-allow-rdylib-deps=true',
+#	'-Zpacked-bundled-libs=true',
+#	'-Zplt=true',
+#	'-Clink-arg=-Wl,--as-needed',
+#	'-Clink-arg=-Wl,-z,lazy',
+#	'-Clink-arg=-Wl,-z,nodelete',
+#]
+
+# primarily used for CI
+[profile.test]
+inherits = "dev"
+strip = false
+opt-level = 0
+codegen-units = 16
+incremental = false
+
+[profile.test.package.'*']
+inherits = "dev"
+debug = 0
+strip = false
+opt-level = 0
+codegen-units = 16
+incremental = false
+
+###############################################################################
+#
+# Linting
+#
+
+[workspace.lints.rust]
+absolute-paths-not-starting-with-crate = "warn"
+#box-pointers = "warn"
+deprecated-in-future = "warn"
+elided-lifetimes-in-paths = "warn"
+explicit-outlives-requirements = "warn"
+ffi-unwind-calls = "warn"
+keyword-idents = "warn"
+macro-use-extern-crate = "warn"
+meta-variable-misuse = "warn"
+missing-abi = "warn"
+#missing-copy-implementations = "warn"                               # TODO
+#missing-debug-implementations = "warn"                              # TODO
+non-ascii-idents = "warn"
+rust-2021-incompatible-closure-captures = "warn"
+rust-2021-incompatible-or-patterns = "warn"
+rust-2021-prefixes-incompatible-syntax = "warn"
+rust-2021-prelude-collisions = "warn"
+single-use-lifetimes = "warn"
+trivial-casts = "warn"
+trivial-numeric-casts = "warn"
+unit-bindings = "warn"
+#unnameable-types = "warn"                                           # TODO
+unreachable-pub = "warn"
+unsafe-op-in-unsafe-fn = "warn"
+unstable-features = "warn"
+unused-extern-crates = "warn"
+unused-import-braces = "warn"
+unused-lifetimes = "warn"
+unused-macro-rules = "warn"
+unused-qualifications = "warn"
+#unused-results = "warn"                                             # TODO
+
+## some sadness
+elided_named_lifetimes = "allow"                                     # TODO!
+let_underscore_drop = "allow"
+missing_docs = "allow"
+# cfgs cannot be limited to expected cfgs or their de facto non-transitive/opt-in use-case e.g.
+# tokio_unstable will warn.
+unexpected_cfgs = "allow"
+# this seems to suggest broken code and is not working correctly
+unused_braces = "allow"
+# buggy, but worth checking on occasionally
+unused_crate_dependencies = "allow"
+unsafe_code = "allow"
+variant_size_differences = "allow"
+
+#######################################
+#
+# Clippy lints
+#
+
+[workspace.lints.clippy]
+
+###################
+cargo = { level = "warn", priority = -1 }
+
+## some sadness
+multiple_crate_versions = { level = "allow", priority = 1 }
+
+###################
+complexity = { level = "warn", priority = -1 }
+
+###################
+correctness = { level = "warn", priority = -1 }
+
+###################
+nursery = { level = "warn", priority = -1 }
+
+## some sadness
+missing_const_for_fn = { level = "allow", priority = 1 }             # TODO
+option_if_let_else = { level = "allow", priority = 1 }               # TODO
+redundant_pub_crate = { level = "allow", priority = 1 }              # TODO
+significant_drop_in_scrutinee = { level = "allow", priority = 1 }    # TODO
+significant_drop_tightening = { level = "allow", priority = 1 }      # TODO
+
+###################
+pedantic = { level = "warn", priority = -1 }
+
+## some sadness
+too_long_first_doc_paragraph = { level = "allow", priority = 1 }
+doc_markdown = { level = "allow", priority = 1 }
+enum_glob_use = { level = "allow", priority = 1 }
+if_not_else = { level = "allow", priority = 1 }
+if_then_some_else_none = { level = "allow", priority = 1 }
+inline_always = { level = "allow", priority = 1 }
+match_bool = { level = "allow", priority = 1 }
+missing_docs_in_private_items = { level = "allow", priority = 1 }
+missing_errors_doc = { level = "allow", priority = 1 }
+missing_panics_doc = { level = "allow", priority = 1 }
+module_name_repetitions = { level = "allow", priority = 1 }
+no_effect_underscore_binding = { level = "allow", priority = 1 }
+similar_names = { level = "allow", priority = 1 }
+single_match_else = { level = "allow", priority = 1 }
+struct_field_names = { level = "allow", priority = 1 }
+unnecessary_wraps = { level = "allow", priority = 1 }
+unused_async = { level = "allow", priority = 1 }
+
+###################
+perf = { level = "warn", priority = -1 }
+
+###################
+#restriction = "warn"
+
+#allow_attributes = "warn"                                           # UNSTABLE
+arithmetic_side_effects = "warn"
+as_conversions = "warn"
+as_underscore = "warn"
+assertions_on_result_states = "warn"
+dbg_macro = "warn"
+default_union_representation = "warn"
+deref_by_slicing = "warn"
+empty_drop = "warn"
+empty_structs_with_brackets = "warn"
+exit = "warn"
+filetype_is_file = "warn"
+float_cmp_const = "warn"
+fn_to_numeric_cast_any = "warn"
+format_push_string = "warn"
+get_unwrap = "warn"
+impl_trait_in_params = "warn"
+let_underscore_untyped = "warn"
+lossy_float_literal = "warn"
+mem_forget = "warn"
+missing_assert_message = "warn"
+mutex_atomic = "warn"
+pub_without_shorthand = "warn"
+rc_buffer = "warn"
+rc_mutex = "warn"
+redundant_type_annotations = "warn"
+rest_pat_in_fully_bound_structs = "warn"
+semicolon_outside_block = "warn"
+str_to_string = "warn"
+string_lit_chars_any = "warn"
+string_slice = "warn"
+string_to_string = "warn"
+suspicious_xor_used_as_pow = "warn"
+tests_outside_test_module = "warn"
+try_err = "warn"
+undocumented_unsafe_blocks = "warn"
+unnecessary_safety_comment = "warn"
+unnecessary_safety_doc = "warn"
+unnecessary_self_imports = "warn"
+unneeded_field_pattern = "warn"
+unseparated_literal_suffix = "warn"
+#unwrap_used = "warn"                                                # TODO
+verbose_file_reads = "warn"
+
+###################
+style = { level = "warn", priority = -1 }
+
+## some sadness
+# trivial assertions are quite alright
+assertions_on_constants = { level = "allow", priority = 1 }
+module_inception = { level = "allow", priority = 1 }
+
+###################
+suspicious = { level = "warn", priority = -1 }
+
+## some sadness
+let_underscore_future = { level = "allow", priority = 1 }

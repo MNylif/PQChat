@@ -1,0 +1,90 @@
+[package]
+name = "conduwuit_service"
+categories.workspace = true
+description.workspace = true
+edition.workspace = true
+keywords.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[lib]
+path = "mod.rs"
+crate-type = [
+	"rlib",
+#	"dylib",
+]
+
+[features]
+brotli_compression = [
+	"reqwest/brotli",
+]
+console = [
+	"dep:rustyline-async",
+	"dep:termimad",
+]
+element_hacks = []
+gzip_compression = [
+	"reqwest/gzip",
+]
+media_thumbnail = [
+	"dep:image",
+]
+release_max_log_level = [
+	"tracing/max_level_trace",
+	"tracing/release_max_level_info",
+	"log/max_level_trace",
+	"log/release_max_level_info",
+]
+url_preview = [
+	"dep:image",
+	"dep:webpage",
+]
+zstd_compression = [
+    "reqwest/zstd",
+]
+blurhashing = ["dep:image","dep:blurhash"]
+
+[dependencies]
+arrayvec.workspace = true
+async-trait.workspace = true
+base64.workspace = true
+bytes.workspace = true
+conduwuit-core.workspace = true
+conduwuit-database.workspace = true
+const-str.workspace = true
+either.workspace = true
+futures.workspace = true
+hickory-resolver.workspace = true
+http.workspace = true
+image.workspace = true
+image.optional = true
+ipaddress.workspace = true
+itertools.workspace = true
+log.workspace = true
+loole.workspace = true
+lru-cache.workspace = true
+rand.workspace = true
+regex.workspace = true
+reqwest.workspace = true
+ruma.workspace = true
+rustyline-async.workspace = true
+rustyline-async.optional = true
+serde_json.workspace = true
+serde.workspace = true
+serde_yaml.workspace = true
+sha2.workspace = true
+smallvec.workspace = true
+termimad.workspace = true
+termimad.optional = true
+tokio.workspace = true
+tracing.workspace = true
+url.workspace = true
+webpage.workspace = true
+webpage.optional = true
+blurhash.workspace = true
+blurhash.optional = true
+
+[lints]
+workspace = true
