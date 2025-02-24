@@ -5,9 +5,9 @@ use axum::{
 	Router,
 };
 use axum_client_ip::SecureClientIpSource;
-use conduwuit::{debug, error, Result, Server};
-use conduwuit_api::router::state::Guard;
-use conduwuit_service::Services;
+use pqchat::{debug, error, Result, Server};
+use pqchat_api::router::state::Guard;
+use pqchat_service::Services;
 use http::{
 	header::{self, HeaderName},
 	HeaderValue, Method, StatusCode,
@@ -25,7 +25,7 @@ use tracing::Level;
 
 use crate::{request, router};
 
-const CONDUWUIT_CSP: &[&str; 5] = &[
+const PQCHAT_CSP: &[&str; 5] = &[
 	"default-src 'none'",
 	"frame-ancestors 'none'",
 	"form-action 'none'",
@@ -33,7 +33,7 @@ const CONDUWUIT_CSP: &[&str; 5] = &[
 	"sandbox",
 ];
 
-const CONDUWUIT_PERMISSIONS_POLICY: &[&str; 2] = &["interest-cohort=()", "browsing-topics=()"];
+const PQCHAT_PERMISSIONS_POLICY: &[&str; 2] = &["interest-cohort=()", "browsing-topics=()"];
 
 pub(crate) fn build(services: &Arc<Services>) -> Result<(Router, Guard)> {
 	let server = &services.server;
@@ -82,11 +82,11 @@ pub(crate) fn build(services: &Arc<Services>) -> Result<(Router, Guard)> {
 		))
 		.layer(SetResponseHeaderLayer::if_not_present(
 			HeaderName::from_static("permissions-policy"),
-			HeaderValue::from_str(&CONDUWUIT_PERMISSIONS_POLICY.join(","))?,
+			HeaderValue::from_str(&PQCHAT_PERMISSIONS_POLICY.join(","))?,
 		))
 		.layer(SetResponseHeaderLayer::if_not_present(
 			header::CONTENT_SECURITY_POLICY,
-			HeaderValue::from_str(&CONDUWUIT_CSP.join(";"))?,
+			HeaderValue::from_str(&PQCHAT_CSP.join(";"))?,
 		))
 		.layer(cors_layer(server))
 		.layer(body_limit_layer(server))

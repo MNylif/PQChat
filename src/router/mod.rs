@@ -4,17 +4,17 @@ mod router;
 mod run;
 mod serve;
 
-extern crate conduwuit_core as conduwuit;
+extern crate pqchat_core as pqchat;
 
 use std::{panic::AssertUnwindSafe, pin::Pin, sync::Arc};
 
-use conduwuit::{Error, Result, Server};
-use conduwuit_service::Services;
+use pqchat::{Error, Result, Server};
+use pqchat_service::Services;
 use futures::{Future, FutureExt, TryFutureExt};
 
-conduwuit::mod_ctor! {}
-conduwuit::mod_dtor! {}
-conduwuit::rustc_flags_capture! {}
+pqchat::mod_ctor! {}
+pqchat::mod_dtor! {}
+pqchat::rustc_flags_capture! {}
 
 #[unsafe(no_mangle)]
 pub extern "Rust" fn start(

@@ -1,6 +1,6 @@
-extern crate conduwuit_admin as admin;
-extern crate conduwuit_core as conduwuit;
-extern crate conduwuit_service as service;
+extern crate pqchat_admin as admin;
+extern crate pqchat_core as pqchat;
+extern crate pqchat_service as service;
 
 use std::{
 	sync::{atomic::Ordering, Arc, Weak},
@@ -8,7 +8,7 @@ use std::{
 };
 
 use axum_server::Handle as ServerHandle;
-use conduwuit::{debug, debug_error, debug_info, error, info, Error, Result, Server};
+use pqchat::{debug, debug_error, debug_info, error, info, Error, Result, Server};
 use futures::FutureExt;
 use service::Services;
 use tokio::{

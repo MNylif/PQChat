@@ -4,7 +4,9 @@ use axum_extra::{
 	typed_header::TypedHeaderRejectionReason,
 	TypedHeader,
 };
-use conduwuit::{debug_error, err, warn, Err, Error, Result};
+use pqchat::{
+	debug_error, err, warn, Err, Error, Result,
+};
 use ruma::{
 	api::{
 		client::{
@@ -291,7 +293,7 @@ async fn auth_server(
 		if request.parts.uri.to_string().contains('@') {
 			warn!(
 				"Request uri contained '@' character. Make sure your reverse proxy gives \
-				 conduwuit the raw uri (apache: use nocanon)"
+				 pqchat the raw uri (apache: use nocanon)"
 			);
 		}
 

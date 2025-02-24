@@ -2,7 +2,7 @@
 
 use std::{env, os::unix::process::CommandExt, process::Command};
 
-use conduwuit::{debug, info, utils};
+use pqchat::{debug, info, utils};
 
 #[cold]
 pub(super) fn restart() -> ! {

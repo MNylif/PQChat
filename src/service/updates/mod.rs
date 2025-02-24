@@ -1,7 +1,7 @@
 use std::{sync::Arc, time::Duration};
 
 use async_trait::async_trait;
-use conduwuit::{debug, info, warn, Result, Server};
+use pqchat::{debug, info, warn, Result, Server};
 use database::{Deserialized, Map};
 use ruma::events::room::message::RoomMessageEventContent;
 use serde::Deserialize;
@@ -119,8 +119,7 @@ impl Service {
 		self.services
 			.admin
 			.send_message(RoomMessageEventContent::text_markdown(format!(
-				"### the following is a message from the conduwuit puppy\n\nit was sent on \
-				 `{}`:\n\n@room: {}",
+				"### Message from PQChat\n\nThis message was sent on `{}`:\n\n@room: {}",
 				update.date, update.message
 			)))
 			.await
