@@ -66,24 +66,40 @@ if ! command -v docker-compose &> /dev/null; then
 fi
 
 # Create directory for PQChat
-mkdir -p ~/pqchat
-cd ~/pqchat
+INSTALL_DIR="/opt/pqchat"
+echo "Creating installation directory at $INSTALL_DIR..."
+mkdir -p "$INSTALL_DIR"
+cd "$INSTALL_DIR"
 
-# Download docker-compose.yml
+# Download configuration files
 echo "Downloading configuration files..."
 curl -O https://raw.githubusercontent.com/MNylif/PQChat/main/docker-compose.yml
 curl -O https://raw.githubusercontent.com/MNylif/PQChat/main/pqchat-example.toml
+curl -O https://raw.githubusercontent.com/MNylif/PQChat/main/Dockerfile
 
 # Rename config file
-mv pqchat-example.toml pqchat.toml
+cp pqchat-example.toml pqchat.toml
 
-# Create data directory
+# Create data directory with proper permissions
 mkdir -p data
+chown -R 1000:1000 data
 
 echo "Starting PQChat..."
 docker-compose up -d
 
-echo "PQChat is now running!"
-echo "You can access it at http://localhost:6167"
-echo "To view logs, run: docker-compose logs -f"
-echo "To stop PQChat, run: docker-compose down"
+# Check if containers are running
+if docker-compose ps | grep -q "running"; then
+    echo "PQChat is now running!"
+    echo "You can access it at http://localhost:6167"
+    echo "Configuration files are in $INSTALL_DIR"
+    echo ""
+    echo "Management commands (run from $INSTALL_DIR):"
+    echo "- View logs: docker-compose logs -f"
+    echo "- Stop server: docker-compose down"
+    echo "- Start server: docker-compose up -d"
+    echo "- Restart server: docker-compose restart"
+else
+    echo "Error: PQChat failed to start. Checking logs..."
+    docker-compose logs
+    exit 1
+fi
