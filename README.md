@@ -19,6 +19,40 @@ PQChat is a secure, post-quantum encrypted Matrix homeserver implementation in R
 - End-to-end encryption
 - Quantum-resistant algorithms
 
+## Quick Start with Docker
+
+The fastest way to get started with PQChat is using Docker. Run this command:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/MNylif/PQChat/main/install.sh | bash
+```
+
+This will:
+- Check for Docker and Docker Compose
+- Create necessary directories
+- Download and set up configuration files
+- Start PQChat using Docker Compose
+
+After installation, PQChat will be available at `http://localhost:6167`.
+
+For users who prefer to inspect the installation script first:
+```bash
+# Download the script
+curl -O https://raw.githubusercontent.com/MNylif/PQChat/main/install.sh
+# Review it
+cat install.sh
+# Make it executable and run
+chmod +x install.sh
+./install.sh
+```
+
+### Docker Management Commands
+
+- View logs: `docker-compose logs -f`
+- Stop server: `docker-compose down`
+- Start server: `docker-compose up -d`
+- Restart server: `docker-compose restart`
+
 ## Building from Source
 
 ### Prerequisites
